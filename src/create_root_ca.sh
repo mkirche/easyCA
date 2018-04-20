@@ -4,6 +4,10 @@
 MY_PATH="`dirname \"$0\"`"
 MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
 
+# default arguments
+ROOTDIR=/root/ca
+ROOTCONFIGTEMPLATE=templates/openssl_root.tpl
+
 # evaluate cli arguments
 while [[ $# -gt 0 ]]
 do
@@ -12,6 +16,11 @@ key="$1"
 case $key in
     -d|--rootdir)
     ROOTDIR="$2"
+    shift # past argument
+    shift # past value
+    ;;
+    -C|--rootconfig)
+    ROOTCONFIGTEMPLATE="$2"
     shift # past argument
     shift # past value
     ;;
@@ -25,7 +34,7 @@ chmod 700 private
 touch index.txt
 echo 1000 > serial
 # edit config template and copy to working directory
-sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../templates/openssl_root.tpl" > openssl.cnf
+sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../$ROOTCONFIGTEMPLATE" > openssl.cnf
 
 # generate private key
 openssl genrsa -aes256 -out private/ca.key.pem 4096

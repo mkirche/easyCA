@@ -4,6 +4,10 @@
 MY_PATH="`dirname \"$0\"`"
 MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
 
+# default arguments
+ROOTDIR=/root/ca
+CONFIGTEMPLATE=templates/openssl_intermediate.tpl
+
 # evaluate cli arguments
 while [[ $# -gt 0 ]]
 do
@@ -15,6 +19,10 @@ case $key in
     shift # past argument
     shift # past value
     ;;
+    -c|--config)
+    CONFIGTEMPLATE="$2"
+    shift # past argument
+    shift # past value
 esac
 done
 
@@ -27,7 +35,7 @@ touch index.txt
 echo 1000 > serial
 echo 1000 > crlnumber
 # edit config template and copy to working directory
-sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../templates/openssl_intermediate.tpl" > openssl.cnf
+sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../$CONFIGTEMPLATE" > openssl.cnf
 cd ..
 
 # generate private key
