@@ -35,7 +35,7 @@ touch index.txt
 echo 1000 > serial
 echo 1000 > crlnumber
 # edit config template and copy to working directory
-sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../$CONFIGTEMPLATE" > openssl.cnf
+sed 's|%rootdir%|'$ROOTDIR'|' $CONFIGTEMPLATE > openssl.cnf
 cd ..
 
 # generate private key

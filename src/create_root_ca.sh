@@ -34,7 +34,7 @@ chmod 700 private
 touch index.txt
 echo 1000 > serial
 # edit config template and copy to working directory
-sed 's|%rootdir%|'$ROOTDIR'|' "$MY_PATH/../$ROOTCONFIGTEMPLATE" > openssl.cnf
+sed 's|%rootdir%|'$ROOTDIR'|' $ROOTCONFIGTEMPLATE > openssl.cnf
 
 # generate private key
 openssl genrsa -aes256 -out private/ca.key.pem 4096
