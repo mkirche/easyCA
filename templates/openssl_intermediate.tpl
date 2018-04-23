@@ -1,5 +1,5 @@
 # OpenSSL intermediate CA configuration file.
-# Copy to `/root/ca/intermediate/openssl.cnf`.
+# Copy to `/root/ca/%name%/openssl.cnf`.
 
 [ ca ]
 # `man ca`
@@ -16,12 +16,12 @@ serial            = $dir/serial
 RANDFILE          = $dir/private/.rand
 
 # The root key and root certificate.
-private_key       = $dir/private/intermediate.key.pem
-certificate       = $dir/certs/intermediate.cert.pem
+private_key       = $dir/private/%name%.key.pem
+certificate       = $dir/certs/%name%.cert.pem
 
 # For certificate revocation lists.
 crlnumber         = $dir/crlnumber
-crl               = $dir/crl/intermediate.crl.pem
+crl               = $dir/crl/%name%.crl.pem
 crl_extensions    = crl_ext
 default_crl_days  = 30
 

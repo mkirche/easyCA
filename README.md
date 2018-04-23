@@ -21,6 +21,7 @@ There are a couple of command line options, depending on which script you use:
 - -d|--rootdir: the root directory of the root CA; for creating an intermediate CA this is the directory of the root CA used to sign it; defaults to `\root\ca`
 - -C|--rootconfig: the path to the template used for the CA; only for root CA; defaults to the provided template
 - -c|--config: the path to the temlate used for the CA; only for intermediate CA; defaults to the provided template
+- -n|--name: the name for the new intermediate CA; only for intermediate CA; defaults to 'intermediate'
 
 
 Footnotes
