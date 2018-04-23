@@ -25,13 +25,18 @@ case $key in
     shift # past argument
     shift # past value
     ;;
-	-n|--name)
+    -n|--name)
     CA_NAME="$2"
     shift # past argument
     shift # past value
     ;;
 esac
 done
+
+if [ -d "$ROOTDIR/$CA_NAME" ]; then
+    echo "Error: A folder for the chosen intermediate CA name already exists in the given root directory."
+    exit 1
+fi
 
 # create folder structure
 mkdir "$ROOTDIR/$CA_NAME"
@@ -52,11 +57,18 @@ chmod 400 $CA_NAME/private/$CA_NAME.key.pem
 # generate certificate signing request
 openssl req -config $CA_NAME/openssl.cnf -new -sha256 -key $CA_NAME/private/$CA_NAME.key.pem -out $CA_NAME/csr/$CA_NAME.csr.pem
 
-# generate signed certificate and verify
+# generate signed certificate
 openssl ca -config openssl.cnf -extensions v3_intermediate_ca -days 3650 -notext -md sha256 -in $CA_NAME/csr/$CA_NAME.csr.pem -out $CA_NAME/certs/$CA_NAME.cert.pem
 openssl x509 -noout -text -in $CA_NAME/certs/$CA_NAME.cert.pem
-openssl verify -CAfile certs/ca.cert.pem $CA_NAME/certs/$CA_NAME.cert.pem
 
-# generate ca chain
-cat $CA_NAME/certs/$CA_NAME.cert.pem certs/ca.cert.pem > $CA_NAME/certs/ca-chain.cert.pem
+# verify certificate and generate ca chain
+if [ ! -f certs/ca-chain.cert.pem ]; then
+    openssl verify -CAfile certs/ca.cert.pem $CA_NAME/certs/$CA_NAME.cert.pem
+    cat $CA_NAME/certs/$CA_NAME.cert.pem certs/ca.cert.pem > $CA_NAME/certs/ca-chain.cert.pem
+else
+    ROOTNAME=$(basename $ROOTDIR)
+    openssl verify -CAfile certs/ca-chain.cert.pem $CA_NAME/certs/$CA_NAME.cert.pem
+    cat $CA_NAME/certs/$CA_NAME.cert.pem certs/ca-chain.cert.pem > $CA_NAME/certs/ca-chain.cert.pem
+fi
+
 chmod 444 $CA_NAME/certs/ca-chain.cert.pem
