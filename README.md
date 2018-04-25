@@ -18,11 +18,13 @@ Operation
 ---------
 To use, call one of the scripts under `src`, having made adjustments to the config templates under `templates`.
 There are a couple of command line options, depending on which script you use:
-- -d|--rootdir: the root directory of the root CA; for creating an intermediate CA this is the directory of the root CA used to sign it; defaults to `\root\ca`
+- -d|--rootdir: the root directory of the root CA; this is the root directory of the CA used to sign this certificate/intermediate CA; defaults to `\root\ca` for CAs/`\root\ca\intermediate` for end user certificates
 - -C|--rootconfig: the path to the template used for the CA; only for root CA; defaults to the provided template
 - -c|--config: the path to the temlate used for the CA; only for intermediate CA; defaults to the provided template
-- -n|--name: the name for the new intermediate CA; only for intermediate CA; defaults to 'intermediate'
-
+- -l|--pathlen: the maximum path length of an intermediate CA signed by this CA; defaults to zero (CA signed by this CA can only sign end user certificates)
+- -n|--name: the name for the new intermediate CA or an end user certificate; defaults to 'intermediate' for CAs or to 'client1' for end user certificates
+- -s|--server: flag that, if used, will register the end user certificate as server cert, otherwise it will default to a user cert
+- -p|--protected: flag that, if used, will cause the certificate to be password protected; per default it will be unprotected
 
 Footnotes
 ---------
