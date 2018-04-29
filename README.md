@@ -1,6 +1,6 @@
 easyCA
 ========
-Streamlined creation of root CA and intermediate CA
+Streamlined creation of root CAs and intermediate CAs, as well as end-user certificates.
 
 
 Introduction
@@ -16,7 +16,7 @@ Clone this repository on your local machine.
 
 Operation
 ---------
-To use, call one of the scripts under `src`, having made adjustments to the config templates under `templates`.
+To use, call one of the scripts under `src`, having made adjustments to the corresponding config templates under `templates`.
 There are a couple of command line options, depending on which script you use:
 - -d|--rootdir: the root directory of the root CA; this is the root directory of the CA used to sign this certificate/intermediate CA; defaults to `\root\ca` for CAs/`\root\ca\intermediate` for end user certificates
 - -C|--rootconfig: the path to the template used for the CA; only for root CA; defaults to the provided template
@@ -28,4 +28,4 @@ There are a couple of command line options, depending on which script you use:
 
 Footnotes
 ---------
-<a name="myfootnote1">1</a>:https://jamielinux.com/docs/openssl-certificate-authority/
+<a name="myfootnote1">1</a>: https://jamielinux.com/docs/openssl-certificate-authority/
